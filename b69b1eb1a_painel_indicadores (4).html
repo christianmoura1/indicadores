@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Indicadores de Manutenção</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    :root {
+      --gold: #F5C400;
+      --gold-dark: #c49a00;
+      --bg: #F4F6FA;
+      --card-bg: #FFFFFF;
+      --border: #E2E8F0;
+      --header-bg: #1E293B;
+      --text: #1E293B;
+      --muted: #64748B;
+      --green: #16A34A;
+      --green-light: #DCFCE7;
+      --yellow: #CA8A04;
+      --yellow-light: #FEF9C3;
+      --red: #DC2626;
+      --red-light: #FEE2E2;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      color: var(--text);
+      padding: 28px 20px;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      max-width: 1340px;
+      margin: 0 auto 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .logo-area { display: flex; align-items: center; gap: 14px; }
+    .logo-icon {
+      width: 48px; height: 48px;
+      background: var(--gold);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 2px 8px rgba(245,196,0,0.4);
+    }
+    .logo-text h1 { font-size: 18px; font-weight: 800; color: var(--text); }
+    .logo-text p { font-size: 12px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+    .top-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .btn {
+      display: flex; align-items: center; gap: 7px;
+      padding: 10px 18px; border-radius: 9px;
+      font-size: 13px; font-weight: 600;
+      border: none; cursor: pointer;
+      transition: all 0.18s; font-family: 'Inter', sans-serif;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+    .btn:active { transform: translateY(0); }
+    .btn-primary { background: var(--gold); color: #000; box-shadow: 0 2px 6px rgba(245,196,0,0.3); }
+    .btn-primary:hover { background: #FFD700; }
+    .btn-outline { background: #fff; color: var(--text); border: 1.5px solid var(--border); }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold-dark); }
+    .btn-danger { background: #FEE2E2; color: #DC2626; border: 1.5px solid #FECACA; }
+    .btn-danger:hover { background: #FCA5A5; }
+
+    /* CARD */
+    .card {
+      max-width: 1340px; margin: 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+    /* HEADER */
+    .panel-header {
+      background: var(--header-bg);
+      padding: 20px 28px;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap; gap: 14px;
+    }
+    .panel-header-left h2 { font-size: 20px; font-weight: 900; color: #fff; letter-spacing: 0.5px; }
+    .panel-header-left p { font-size: 12px; color: #94A3B8; font-weight: 500; margin-top: 3px; }
+    .nav-group { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .nav-block { display: flex; align-items: center; gap: 8px; }
+    .nav-block label {
+      font-size: 10px; font-weight: 700; color: #94A3B8;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      display: block; margin-bottom: 2px;
+    }
+    .nav-inner { display: flex; align-items: center; gap: 6px; }
+    .nav-btn {
+      width: 30px; height: 30px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 7px; font-size: 16px; cursor: pointer;
+      color: #fff; font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.2); }
+    .nav-badge {
+      background: var(--gold); color: #000;
+      font-size: 12px; font-weight: 800;
+      padding: 5px 14px; border-radius: 20px;
+      letter-spacing: 0.3px; white-space: nowrap;
+      min-width: 90px; text-align: center;
+    }
+    .divider-v { width: 1px; height: 36px; background: rgba(255,255,255,0.15); }
+
+    /* STATS */
+    .stats-bar { display: flex; border-bottom: 1px solid var(--border); background: #F8FAFC; }
+    .stat-item {
+      flex: 1; display: flex; align-items: center; gap: 12px;
+      padding: 14px 22px; border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .stat-icon.green { background: var(--green-light); }
+    .stat-icon.yellow { background: var(--yellow-light); }
+    .stat-icon.red { background: var(--red-light); }
+    .stat-icon.total { background: #EFF6FF; }
+    .stat-label { font-size: 11px; color: var(--muted); font-weight: 600; }
+    .stat-value { font-size: 22px; font-weight: 800; color: var(--text); line-height: 1.1; }
+    .stat-sub { font-size: 10px; color: var(--muted); }
+
+    /* TABLE */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 900px; }
+
+    thead th {
+      background: #F1F5F9; color: #475569;
+      font-size: 10.5px; font-weight: 700;
+      text-align: center; padding: 10px 8px;
+      border-bottom: 2px solid var(--border);
+      border-right: 1px solid var(--border);
+      white-space: nowrap; letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+    thead th:first-child {
+      text-align: left; padding-left: 22px;
+      min-width: 165px; border-right: 2px solid var(--border);
+    }
+    thead th:last-child { border-right: none; }
+
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #F8FAFC; }
+
+    tbody td {
+      padding: 9px 8px; text-align: center;
+      border-right: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    tbody td:first-child {
+      text-align: left; padding-left: 22px;
+      font-size: 13px; font-weight: 600;
+      color: var(--text); border-right: 2px solid var(--border);
+      white-space: nowrap;
+    }
+    tbody td:last-child { border-right: none; }
+
+    /* SCORE ROW */
+    .score-row td {
+      background: #1E293B !important;
+      border-top: 3px solid var(--gold) !important;
+      border-bottom: none !important;
+      padding: 12px 8px !important;
+    }
+    .score-row td:first-child {
+      background: #1E293B !important;
+      color: #fff !important;
+      font-size: 12px !important;
+      font-weight: 800 !important;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-right: 2px solid #374151 !important;
+    }
+    .score-row:hover { background: transparent !important; }
+
+    .score-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .score-total {
+      font-size: 18px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .score-bar {
+      width: 100%;
+      max-width: 52px;
+      height: 5px;
+      border-radius: 3px;
+      background: #374151;
+      overflow: hidden;
+    }
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.5s ease;
+    }
+
+    .score-mini {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      font-size: 10px;
+      font-weight: 600;
+    }
+    .score-mini span { display: flex; align-items: center; gap: 2px; }
+    .dot-mini {
+      width: 7px; height: 7px; border-radius: 50%;
+      display: inline-block;
+    }
+    .dot-mini.g { background: #22c55e; }
+    .dot-mini.y { background: #eab308; }
+    .dot-mini.r { background: #ef4444; }
+    .score-mini .sg { color: #4ade80; }
+    .score-mini .sy { color: #fde047; }
+    .score-mini .sr { color: #f87171; }
+
+    .rank-badge {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 10px;
+      letter-spacing: 0.3px;
+    }
+    .rank-1 { background: #FFD700; color: #000; }
+    .rank-2 { background: #CBD5E1; color: #1E293B; }
+    .rank-3 { background: #CD7F32; color: #fff; }
+    .rank-other { background: #374151; color: #94A3B8; }
+
+    /* CIRCLES */
+    .circle {
+      display: inline-flex; width: 26px; height: 26px;
+      border-radius: 50%; cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      position: relative;
+    }
+    .circle::after {
+      content: ''; position: absolute;
+      top: 22%; left: 22%; width: 32%; height: 32%;
+      border-radius: 50%; background: rgba(255,255,255,0.55);
+    }
+    .circle:hover { transform: scale(1.3); }
+    .circle:active { transform: scale(0.9); }
+    .circle.green {
+      background: radial-gradient(circle at 35% 30%, #4ade80, #15803D);
+      box-shadow: 0 2px 8px rgba(22,163,74,0.45);
+    }
+    .circle.yellow {
+      background: radial-gradient(circle at 35% 30%, #fde047, #A16207);
+      box-shadow: 0 2px 8px rgba(202,138,4,0.45);
+    }
+    .circle.red {
+      background: radial-gradient(circle at 35% 30%, #f87171, #991B1B);
+      box-shadow: 0 2px 8px rgba(220,38,38,0.45);
+    }
+
+    /* FOOTER */
+    .panel-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 24px; background: #F8FAFC;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap; gap: 10px;
+    }
+    .legend { display: flex; gap: 20px; flex-wrap: wrap; }
+    .legend-item {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12px; font-weight: 600; color: var(--muted);
+    }
+    .legend-dot { width: 11px; height: 11px; border-radius: 50%; }
+    .legend-dot.green { background: var(--green); }
+    .legend-dot.yellow { background: var(--yellow); }
+    .legend-dot.red { background: var(--red); }
+    .footer-right { font-size: 11px; color: var(--muted); }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 30px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #1E293B; color: #fff;
+      padding: 12px 28px; border-radius: 30px;
+      font-weight: 600; font-size: 13px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      z-index: 999;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    .hint {
+      max-width: 1340px; margin: 14px auto 0;
+      font-size: 12px; color: var(--muted); text-align: center;
+    }
+
+    /* PRINT */
+    @media print {
+      body { background: #fff !important; padding: 0; }
+      .topbar, .top-actions, .hint, .toast, .stats-bar { display: none !important; }
+      .card { box-shadow: none; border: none; max-width: 100%; }
+      .panel-header { background: #1E293B !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      table { min-width: unset; }
+      thead th { background: #F1F5F9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .circle { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-shadow: none !important; }
+      .circle.green { background: #16A34A !important; }
+      .circle.yellow { background: #CA8A04 !important; }
+      .circle.red { background: #DC2626 !important; }
+      .score-row td { background: #1E293B !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .score-total { color: #fff !important; }
+      .score-mini .sg { color: #4ade80 !important; }
+      .score-mini .sy { color: #fde047 !important; }
+      .score-mini .sr { color: #f87171 !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo-area">
+    <div class="logo-icon">🔧</div>
+    <div class="logo-text">
+      <h1>Indicadores de Manutenção</h1>
+      <p>Painel de acompanhamento semanal</p>
+    </div>
+  </div>
+  <div class="top-actions">
+    <button class="btn btn-outline" onclick="exportarMes()">📊 Baixar mês</button>
+    <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir / PDF</button>
+    <button class="btn btn-danger" onclick="resetarDados()">🔄 Resetar</button>
+  </div>
+</div>
+
+<div class="card">
+
+  <!-- HEADER -->
+  <div class="panel-header">
+    <div class="panel-header-left">
+      <h2 id="header-title">INDICADORES – MAIO 2026</h2>
+      <p>Acompanhamento por região e equipamento</p>
+    </div>
+    <div class="nav-group">
+      <div class="nav-block">
+        <label>Mês</label>
+        <div class="nav-inner">
+          <button class="nav-btn" onclick="mudarMes(-1)">‹</button>
+          <span class="nav-badge" id="mes-label">MAIO 2026</span>
+          <button class="nav-btn" onclick="mudarMes(1)">›</button>
+        </div>
+      </div>
+      <div class="divider-v"></div>
+      <div class="nav-block">
+        <label>Semana</label>
+        <div class="nav-inner">
+          <button class="nav-btn" onclick="mudarSemana(-1)">‹</button>
+          <span class="nav-badge" id="semana-label">SEMANA 19</span>
+          <button class="nav-btn" onclick="mudarSemana(1)">›</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-icon green">🟢</div>
+      <div>
+        <div class="stat-label">Dentro da meta</div>
+        <div class="stat-value" id="count-green">–</div>
+        <div class="stat-sub">indicadores</div>
+      </div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon yellow">🟡</div>
+      <div>
+        <div class="stat-label">Atenção</div>
+        <div class="stat-value" id="count-yellow">–</div>
+        <div class="stat-sub">indicadores</div>
+      </div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon red">🔴</div>
+      <div>
+        <div class="stat-label">Fora da meta</div>
+        <div class="stat-value" id="count-red">–</div>
+        <div class="stat-sub">indicadores</div>
+      </div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon total">📈</div>
+      <div>
+        <div class="stat-label">% Dentro da meta</div>
+        <div class="stat-value" id="pct-green">–</div>
+        <div class="stat-sub">do total</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Indicador</th>
+          <th>BKF Leste</th>
+          <th>BKF Norte</th>
+          <th>Centro Oeste</th>
+          <th>Minas Bahia</th>
+          <th>NE</th>
+          <th>RJ</th>
+          <th>SP Centro Litoral</th>
+          <th>SP Interior Norte</th>
+          <th>SP Interior Sul</th>
+          <th>SP Sul</th>
+          <th>Sul</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="panel-footer">
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot green"></div>Dentro da meta</div>
+      <div class="legend-item"><div class="legend-dot yellow"></div>Atenção</div>
+      <div class="legend-item"><div class="legend-dot red"></div>Fora da meta</div>
+    </div>
+    <div class="footer-right" id="footer-info">Manutenção · Maio 2026 · Semana 19</div>
+  </div>
+</div>
+
+<p class="hint">💡 Clique em qualquer bolinha para alternar o status · As alterações são salvas automaticamente por semana</p>
+<div class="toast" id="toast">✅ Salvo!</div>
+
+<script>
+  const MESES = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+
+  const INDICADORES = [
+    "Perda de receita","Preventiva","Back Log","Banco de Horas",
+    "Risco","Chamado de Coifa","Rotas de Segurança","Rota Técnica",
+    "Broiller","Fritadeira","Tostadeira","PHU","Máquina de Sorvete","Micro Ondas"
+  ];
+
+  const REGIOES = [
+    "BKF Leste","BKF Norte","Centro Oeste","Minas Bahia",
+    "NE","RJ","SP Centro Litoral","SP Interior Norte",
+    "SP Interior Sul","SP Sul","Sul"
+  ];
+
+  const DEFAULTS = {
+    "Perda de receita":   ["Y","G","Y","G","Y","G","Y","G","Y","R","Y"],
+    "Preventiva":         ["R","G","Y","G","R","G","R","G","Y","R","G"],
+    "Back Log":           ["R","G","R","R","R","R","R","G","R","R","R"],
+    "Banco de Horas":     ["R","G","R","Y","R","G","R","G","G","R","G"],
+    "Risco":              ["R","G","Y","G","Y","Y","R","G","G","R","G"],
+    "Chamado de Coifa":   ["R","G","Y","G","R","Y","G","G","G","R","G"],
+    "Rotas de Segurança": ["R","G","Y","G","R","Y","G","G","R","R","Y"],
+    "Rota Técnica":       ["R","G","R","Y","R","Y","Y","G","G","R","Y"],
+    "Broiller":           ["Y","G","R","G","Y","G","R","G","G","Y","G"],
+    "Fritadeira":         ["Y","G","R","G","Y","G","Y","G","G","R","G"],
+    "Tostadeira":         ["Y","G","R","Y","Y","G","Y","G","G","R","G"],
+    "PHU":                ["G","G","G","G","Y","G","Y","G","G","R","G"],
+    "Máquina de Sorvete": ["Y","G","G","G","Y","G","Y","G","G","R","G"],
+    "Micro Ondas":        ["Y","G","Y","G","Y","G","Y","G","G","R","G"]
+  };
+
+  // Pontuação: Verde=3, Amarelo=1, Vermelho=0
+  const PONTOS = { G: 3, Y: 1, R: 0 };
+  const CICLO = ["G","Y","R"];
+  const CLASSES = { G:"green", Y:"yellow", R:"red" };
+
+  let semana = 19;
+  let mes = 4;
+  let ano = 2026;
+  let dados = {};
+
+  function chave() { return `ind_${ano}_${mes}_sem${semana}`; }
+
+  function carregarDados() {
+    const salvo = localStorage.getItem(chave());
+    dados = salvo ? JSON.parse(salvo) : JSON.parse(JSON.stringify(DEFAULTS));
+  }
+
+  function salvarLocal() {
+    localStorage.setItem(chave(), JSON.stringify(dados));
+  }
+
+  function contarStatus() {
+    let g=0, y=0, r=0;
+    INDICADORES.forEach(ind => dados[ind].forEach(v => { if(v==="G") g++; else if(v==="Y") y++; else r++; }));
+    const total = g+y+r;
+    document.getElementById("count-green").textContent = g;
+    document.getElementById("count-yellow").textContent = y;
+    document.getElementById("count-red").textContent = r;
+    document.getElementById("pct-green").textContent = total ? Math.round(g/total*100)+"%" : "–";
+  }
+
+  function calcularPontuacaoPorRegiao() {
+    const maxPontos = INDICADORES.length * 3; // máx possível por regional
+    return REGIOES.map((_, ri) => {
+      let g=0, y=0, r=0, pts=0;
+      INDICADORES.forEach(ind => {
+        const v = dados[ind][ri];
+        pts += PONTOS[v];
+        if(v==="G") g++;
+        else if(v==="Y") y++;
+        else r++;
+      });
+      return { pts, maxPontos, g, y, r, pct: Math.round(pts/maxPontos*100) };
+    });
+  }
+
+  function renderScoreRow(scores) {
+    // Calcular ranking
+    const sorted = [...scores].map((s,i)=>({...s,i})).sort((a,b)=>b.pts-a.pts);
+    const ranks = new Array(scores.length);
+    sorted.forEach((s,pos) => ranks[s.i] = pos+1);
+
+    const maxPts = Math.max(...scores.map(s=>s.pts));
+
+    let tr = document.getElementById("score-row");
+    if (!tr) {
+      tr = document.createElement("tr");
+      tr.id = "score-row";
+      tr.className = "score-row";
+      document.getElementById("tbody").appendChild(tr);
+    }
+    tr.innerHTML = "";
+
+    // Célula label
+    const tdLabel = document.createElement("td");
+    tdLabel.innerHTML = `<span style="color:#F5C400;letter-spacing:1px">🏆 PONTUAÇÃO</span>`;
+    tr.appendChild(tdLabel);
+
+    scores.forEach((s, ri) => {
+      const td = document.createElement("td");
+      const rank = ranks[ri];
+      let rankClass = rank <= 3 ? `rank-${rank}` : "rank-other";
+      let rankLabel = rank === 1 ? "🥇 1º" : rank === 2 ? "🥈 2º" : rank === 3 ? "🥉 3º" : `${rank}º`;
+
+      // Cor da barra baseada no % de acerto
+      let barColor = s.pct >= 70 ? "#22c55e" : s.pct >= 40 ? "#eab308" : "#ef4444";
+
+      td.innerHTML = `
+        <div class="score-cell">
+          <div class="score-total">${s.pts}<span style="font-size:10px;font-weight:600;color:#94A3B8"> pts</span></div>
+          <div class="score-bar">
+            <div class="score-bar-fill" style="width:${s.pct}%;background:${barColor}"></div>
+          </div>
+          <div class="score-mini">
+            <span class="sg"><span class="dot-mini g"></span>${s.g}</span>
+            <span class="sy"><span class="dot-mini y"></span>${s.y}</span>
+            <span class="sr"><span class="dot-mini r"></span>${s.r}</span>
+          </div>
+          <span class="rank-badge ${rankClass}">${rankLabel}</span>
+        </div>`;
+      tr.appendChild(td);
+    });
+  }
+
+  function renderizar() {
+    const tbody = document.getElementById("tbody");
+    // Limpa só as linhas de indicadores (não o score-row)
+    Array.from(tbody.querySelectorAll("tr:not(#score-row)")).forEach(r => r.remove());
+
+    INDICADORES.forEach(ind => {
+      const tr = document.createElement("tr");
+      const tdNome = document.createElement("td");
+      tdNome.textContent = ind;
+      tr.appendChild(tdNome);
+
+      REGIOES.forEach((reg, ri) => {
+        const td = document.createElement("td");
+        const span = document.createElement("span");
+        span.className = `circle ${CLASSES[dados[ind][ri]]}`;
+        span.title = `${ind} – ${reg}`;
+        span.onclick = () => {
+          const prox = CICLO[(CICLO.indexOf(dados[ind][ri])+1)%3];
+          dados[ind][ri] = prox;
+          span.className = `circle ${CLASSES[prox]}`;
+          salvarLocal();
+          contarStatus();
+          renderScoreRow(calcularPontuacaoPorRegiao());
+          mostrarToast("💾 Salvo automaticamente");
+        };
+        td.appendChild(span);
+        tr.appendChild(td);
+      });
+
+      // Inserir antes do score-row se existir
+      const scoreRow = document.getElementById("score-row");
+      if (scoreRow) tbody.insertBefore(tr, scoreRow);
+      else tbody.appendChild(tr);
+    });
+
+    const nomeMes = MESES[mes];
+    document.getElementById("header-title").textContent = `INDICADORES – ${nomeMes.toUpperCase()} ${ano}`;
+    document.getElementById("mes-label").textContent = `${nomeMes.toUpperCase()} ${ano}`;
+    document.getElementById("semana-label").textContent = `SEMANA ${semana}`;
+    document.getElementById("footer-info").textContent = `Manutenção · ${nomeMes} ${ano} · Semana ${semana}`;
+    document.title = `Indicadores ${nomeMes} ${ano} – Sem. ${semana}`;
+
+    contarStatus();
+    renderScoreRow(calcularPontuacaoPorRegiao());
+  }
+
+  function mudarMes(delta) {
+    mes += delta;
+    if (mes < 0) { mes = 11; ano--; }
+    if (mes > 11) { mes = 0; ano++; }
+    semana = 1;
+    carregarDados();
+    renderizar();
+  }
+
+  function mudarSemana(delta) {
+    semana = Math.max(1, Math.min(52, semana + delta));
+    carregarDados();
+    renderizar();
+  }
+
+  function resetarDados() {
+    if (!confirm(`Resetar os indicadores da Semana ${semana} de ${MESES[mes]} ${ano} para o padrão?`)) return;
+    localStorage.removeItem(chave());
+    carregarDados();
+    renderizar();
+    mostrarToast("🔄 Painel resetado!");
+  }
+
+  function mostrarToast(msg) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => t.classList.remove("show"), 2200);
+  }
+
+  function exportarMes() {
+    const nomeMes = MESES[mes];
+    let semanas = [];
+    for (let s = 1; s <= 52; s++) {
+      const k = `ind_${ano}_${mes}_sem${s}`;
+      const salvo = localStorage.getItem(k);
+      if (salvo) semanas.push({ semana: s, dados: JSON.parse(salvo) });
+    }
+    if (!semanas.find(s => s.semana === semana)) {
+      semanas.push({ semana, dados: JSON.parse(JSON.stringify(dados)) });
+      semanas.sort((a,b) => a.semana - b.semana);
+    }
+
+    const COR = { G:"#16A34A", Y:"#CA8A04", R:"#DC2626" };
+    const LABEL = { G:"Dentro da meta", Y:"Atenção", R:"Fora da meta" };
+    const PONTOS_EXP = { G:3, Y:1, R:0 };
+
+    const tabelas = semanas.map(({ semana: s, dados: d }) => {
+      const rows = INDICADORES.map(ind => {
+        const cells = REGIOES.map((_,ri) => {
+          const v = d[ind][ri];
+          return `<td style="text-align:center;border:1px solid #E2E8F0;padding:7px">
+            <span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:${COR[v]}"></span>
+          </td>`;
+        }).join("");
+        return `<tr><td style="padding:7px 14px;font-weight:600;border:1px solid #E2E8F0;background:#F8FAFC;white-space:nowrap;font-size:12px">${ind}</td>${cells}</tr>`;
+      }).join("");
+
+      // Score row no export
+      const maxP = INDICADORES.length * 3;
+      const scoresCells = REGIOES.map((_,ri) => {
+        let pts = 0;
+        INDICADORES.forEach(ind => pts += PONTOS_EXP[d[ind][ri]]);
+        const pct = Math.round(pts/maxP*100);
+        const cor = pct >= 70 ? "#16A34A" : pct >= 40 ? "#CA8A04" : "#DC2626";
+        return `<td style="text-align:center;border:1px solid #374151;padding:8px;background:#1E293B">
+          <div style="color:#fff;font-size:15px;font-weight:900">${pts}<span style="font-size:9px;color:#94A3B8"> pts</span></div>
+          <div style="font-size:10px;font-weight:700;color:${cor};margin-top:2px">${pct}%</div>
+        </td>`;
+      }).join("");
+
+      return `
+        <div style="margin-bottom:36px;border-radius:10px;overflow:hidden;border:1px solid #E2E8F0;box-shadow:0 2px 8px rgba(0,0,0,0.06)">
+          <div style="background:#1E293B;color:#fff;padding:12px 18px;font-size:14px;font-weight:800;letter-spacing:0.5px">📅 SEMANA ${s}</div>
+          <div style="overflow-x:auto">
+            <table style="width:100%;border-collapse:collapse;font-family:Arial,sans-serif;font-size:12px">
+              <thead>
+                <tr style="background:#F1F5F9">
+                  <th style="color:#475569;padding:9px 14px;border:1px solid #E2E8F0;text-align:left;min-width:150px;font-size:11px;text-transform:uppercase">Indicador</th>
+                  ${REGIOES.map(r=>`<th style="color:#475569;padding:9px 7px;border:1px solid #E2E8F0;white-space:nowrap;font-size:10px;text-transform:uppercase">${r}</th>`).join("")}
+                </tr>
+              </thead>
+              <tbody>
+                ${rows}
+                <tr>
+                  <td style="background:#1E293B;color:#F5C400;font-size:11px;font-weight:800;padding:8px 14px;border:1px solid #374151;text-transform:uppercase;letter-spacing:1px">🏆 Pontuação</td>
+                  ${scoresCells}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>`;
+    }).join("");
+
+    const html = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+    <title>Indicadores ${nomeMes} ${ano}</title>
+    <style>body{font-family:Arial,sans-serif;padding:32px;background:#F4F6FA;color:#1E293B}</style></head>
+    <body>
+    <div style="text-align:center;margin-bottom:32px">
+      <div style="font-size:36px;margin-bottom:8px">🔧</div>
+      <h1 style="font-size:22px;font-weight:900;color:#1E293B">INDICADORES DE MANUTENÇÃO</h1>
+      <h2 style="font-size:17px;color:#64748B;font-weight:600;margin-top:4px">${nomeMes.toUpperCase()} ${ano}</h2>
+      <p style="font-size:12px;color:#94A3B8;margin-top:6px">Gerado em ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')}</p>
+    </div>
+    <div style="display:flex;gap:24px;margin-bottom:28px;justify-content:center">
+      ${Object.entries(COR).map(([k,c])=>`<span style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:#475569">
+        <span style="width:14px;height:14px;border-radius:50%;background:${c};display:inline-block"></span>${LABEL[k]}</span>`).join("")}
+      <span style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:#475569">🏆 Pontuação: Verde=3pts · Amarelo=1pt · Vermelho=0pt</span>
+    </div>
+    ${tabelas}
+    </body></html>`;
+
+    const blob = new Blob([html], { type:"text/html;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `indicadores_${nomeMes.toLowerCase()}_${ano}.html`;
+    a.click();
+    mostrarToast(`📊 ${nomeMes} ${ano} exportado!`);
+  }
+
+  carregarDados();
+  renderizar();
+</script>
+</body>
+</html>
