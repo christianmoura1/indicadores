@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -425,16 +426,16 @@
       <thead>
         <tr>
           <th>Indicador</th>
-          <th>BKF Leste</th>
           <th>BKF Norte</th>
+          <th>BKF Leste</th>
+          <th>SP Centro Litoral</th>
+          <th>SP Sul</th>
+          <th>SP Interior Norte</th>
+          <th>SP Interior Sul</th>
           <th>Centro Oeste</th>
           <th>Minas Bahia</th>
           <th>NE</th>
           <th>RJ</th>
-          <th>SP Centro Litoral</th>
-          <th>SP Interior Norte</th>
-          <th>SP Interior Sul</th>
-          <th>SP Sul</th>
           <th>Sul</th>
         </tr>
       </thead>
@@ -466,25 +467,25 @@
   ];
 
   const REGIOES = [
-    "BKF Leste","BKF Norte","Centro Oeste","Minas Bahia",
-    "NE","RJ","SP Centro Litoral","SP Interior Norte",
-    "SP Interior Sul","SP Sul","Sul"
+    "BKF Norte","BKF Leste","SP Centro Litoral","SP Sul",
+    "SP Interior Norte","SP Interior Sul","Centro Oeste","Minas Bahia",
+    "NE","RJ","Sul"
   ];
 
   const DEFAULTS = {
-    "Perda de receita":   ["Y","G","Y","G","Y","G","Y","G","Y","R","Y"],
-    "Preventiva":         ["R","G","Y","G","R","G","R","G","Y","R","G"],
-    "Back Log":           ["R","G","R","R","R","R","R","G","R","R","R"],
-    "Banco de Horas":     ["R","G","R","Y","R","G","R","G","G","R","G"],
-    "Risco":              ["R","G","Y","G","Y","Y","R","G","G","R","G"],
-    "Chamado de Coifa":   ["R","G","Y","G","R","Y","G","G","G","R","G"],
-    "Rotas de Segurança": ["R","G","Y","G","R","Y","G","G","R","R","Y"],
-    "Rota Técnica":       ["R","G","R","Y","R","Y","Y","G","G","R","Y"],
-    "Broiller":           ["Y","G","R","G","Y","G","R","G","G","Y","G"],
-    "Fritadeira":         ["Y","G","R","G","Y","G","Y","G","G","R","G"],
-    "Tostadeira":         ["Y","G","R","Y","Y","G","Y","G","G","R","G"],
-    "PHU":                ["G","G","G","G","Y","G","Y","G","G","R","G"],
-    "Máquina de Sorvete": ["Y","G","G","G","Y","G","Y","G","G","R","G"],
+    "Perda de receita":   ["G","Y","Y","G","Y","R","Y","Y","G","G","Y"],
+    "Preventiva":   ["G","R","R","G","Y","R","Y","R","G","G","G"],
+    "Back Log":   ["G","R","R","G","R","R","R","R","R","R","R"],
+    "Banco de Horas":   ["G","R","R","G","G","R","R","R","G","Y","G"],
+    "Risco":   ["G","R","R","G","G","R","Y","Y","Y","G","G"],
+    "Chamado de Coifa":   ["G","R","G","G","G","R","Y","R","Y","G","G"],
+    "Rotas de Segurança":   ["G","R","G","G","R","R","Y","R","Y","G","Y"],
+    "Rota Técnica":   ["G","R","Y","G","G","R","R","R","Y","Y","Y"],
+    "Broiller":   ["G","Y","R","G","G","Y","R","Y","G","G","G"],
+    "Fritadeira":   ["G","Y","Y","G","G","R","R","Y","G","G","G"],
+    "Tostadeira":   ["G","Y","Y","G","G","R","R","Y","G","Y","G"],
+    "PHU":   ["G","G","Y","G","G","R","G","Y","G","G","G"],
+    "Máquina de Sorvete":   ["G","Y","Y","G","G","R","G","Y","G","G","G"],
     "Micro Ondas":        ["Y","G","Y","G","Y","G","Y","G","G","R","G"]
   };
 
