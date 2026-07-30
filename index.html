@@ -252,7 +252,7 @@
     .rank-1 { background: #FFD700; color: #000; }
     .rank-2 { background: #CBD5E1; color: #1E293B; }
     .rank-3 { background: #CD7F32; color: #fff; }
-    .rank-other { background: #374151; color: #94A3B8; }
+    .rank-other { background: #E2E8F0; color: #1E293B; }
 
     /* CIRCLES */
     .circle {
@@ -426,15 +426,15 @@
         <tr>
           <th>Indicador</th>
           <th>BKF CENTRO LITORAL</th>
-          <th>BKF Norte</th>
           <th>BKF Leste</th>
-          <th>SP Sul</th>
-          <th>SP Interior Norte</th>
-          <th>SP Interior Sul</th>
+          <th>BKF Norte</th>
           <th>Centro Oeste</th>
           <th>Minas Bahia</th>
           <th>NE</th>
           <th>RJ</th>
+          <th>SP Interior Norte</th>
+          <th>SP Interior Sul</th>
+          <th>SP Sul</th>
           <th>Sul</th>
         </tr>
       </thead>
@@ -466,26 +466,26 @@
   ];
 
   const REGIOES = [
-    "BKF CENTRO LITORAL","BKF Norte","BKF Leste","SP Sul",
-    "SP Interior Norte","SP Interior Sul","Centro Oeste","Minas Bahia",
-    "NE","RJ","Sul"
+    "BKF CENTRO LITORAL","BKF Leste","BKF Norte","Centro Oeste",
+    "Minas Bahia","NE","RJ","SP Interior Norte",
+    "SP Interior Sul","SP Sul","Sul"
   ];
 
   const DEFAULTS = {
-    "Perda de receita":   ["Y","G","Y","G","Y","R","Y","Y","G","G","Y"],
-    "Preventiva":   ["R","G","R","G","Y","R","Y","R","G","G","G"],
-    "Back Log":   ["R","G","R","G","R","R","R","R","R","R","R"],
-    "Banco de Horas":   ["R","G","R","G","G","R","R","R","G","Y","G"],
-    "Risco":   ["R","G","R","G","G","R","Y","Y","Y","G","G"],
-    "Chamado de Coifa":   ["G","G","R","G","G","R","Y","R","Y","G","G"],
-    "Rotas de Segurança":   ["G","G","R","G","R","R","Y","R","Y","G","Y"],
-    "Rota Técnica":   ["Y","G","R","G","G","R","R","R","Y","Y","Y"],
-    "Broiller":   ["R","G","Y","G","G","Y","R","Y","G","G","G"],
-    "Fritadeira":   ["Y","G","Y","G","G","R","R","Y","G","G","G"],
-    "Tostadeira":   ["Y","G","Y","G","G","R","R","Y","G","Y","G"],
-    "PHU":   ["Y","G","G","G","G","R","G","Y","G","G","G"],
-    "Máquina de Sorvete":   ["Y","G","Y","G","G","R","G","Y","G","G","G"],
-    "Micro Ondas":        ["Y","Y","G","G","Y","G","Y","G","G","R","G"]
+    "Perda de receita":   ["Y","Y","G","Y","Y","G","G","Y","R","G","Y"],
+    "Preventiva":   ["R","R","G","Y","R","G","G","Y","R","G","G"],
+    "Back Log":   ["R","R","G","R","R","R","R","R","R","G","R"],
+    "Banco de Horas":   ["R","R","G","R","R","G","Y","G","R","G","G"],
+    "Risco":   ["R","R","G","Y","Y","Y","G","G","R","G","G"],
+    "Chamado de Coifa":   ["G","R","G","Y","R","Y","G","G","R","G","G"],
+    "Rotas de Segurança":   ["G","R","G","Y","R","Y","G","R","R","G","Y"],
+    "Rota Técnica":   ["Y","R","G","R","R","Y","Y","G","R","G","Y"],
+    "Broiller":   ["R","Y","G","R","Y","G","G","G","Y","G","G"],
+    "Fritadeira":   ["Y","Y","G","R","Y","G","G","G","R","G","G"],
+    "Tostadeira":   ["Y","Y","G","R","Y","G","Y","G","R","G","G"],
+    "PHU":   ["Y","G","G","G","Y","G","G","G","R","G","G"],
+    "Máquina de Sorvete":   ["Y","Y","G","G","Y","G","G","G","R","G","G"],
+    "Micro Ondas":        ["Y","G","Y","Y","G","G","R","Y","G","G","G"]
   };
 
   // Pontuação: Verde=3, Amarelo=1, Vermelho=0
